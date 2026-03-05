@@ -12,14 +12,22 @@ export { LegalDocsClient, createLegalDocsClient }
 export type {
   LegalDocumentQuery,
   LegalDocument,
-  ApiResponse,
+  LegalDocumentNetwork,
   LegalDocsClientConfig
 } from './api/client'
 
 export type {
-  LegalDocsFormData,
   LegalDocsFormProps
 } from './components/LegalDocsForm.vue'
+
+export {
+  DataSource,
+  DocType,
+  type QueryParameters,
+  type LawItem,
+  type HierarchicalOption,
+  type SearchSubmitParams
+} from './types'
 
 // Vue plugin for registering components globally
 export const LegalDocsFetcherPlugin: Plugin = {

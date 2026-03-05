@@ -1,11 +1,9 @@
 <template>
   <div id="app">
     <div class="demo-container">
-      <h1>Legal Docs Fetcher - Demo</h1>
-      <p class="subtitle">Test the component and API client</p>
-      
       <LegalDocsForm 
-        title="Document Request Form"
+        title="Legal Documents Search: DEMO"
+        subtitle="Enter your search parameters to fetch legal documents from the API."
         :on-submit="handleFormSubmit"
         @success="onSuccess"
         @error="onError"
@@ -17,28 +15,26 @@
 <script setup lang="ts">
 import LegalDocsForm from '../components/LegalDocsForm.vue'
 import { createLegalDocsClient } from '../api/client'
-import type { LegalDocsFormData } from '../components/LegalDocsForm.vue'
+import type { QueryParameters } from '../types'
 
-// Initialize the API client
-// Replace with your actual API endpoint
+// Initialize the API client using the Vite proxy
+// In development, requests go to /api which Vite proxies to the real API
 const client = createLegalDocsClient({
-  baseURL: 'https://api.example.com/v1',
-  apiKey: 'your-api-key-here', // Optional
-  timeout: 10000
+  baseURL: '/api', // Vite will proxy this to the real API
+  timeout: 30000
 })
 
+console.log('API Client initialized with proxy')
+
 // Handle form submission
-const handleFormSubmit = async (formData: LegalDocsFormData) => {
-  console.log('Form submitted with data:', formData)
+const handleFormSubmit = async (formData: QueryParameters) => {
+  console.log('Form submitted with parameters:', formData)
   
   try {
-    // Use the API client to fetch documents
+    
+    // Make the actual API call directly to the edge endpoint
     const documents = await client.fetchDocuments({
-      documentType: formData.documentType,
-      clientName: formData.clientName,
-      jurisdiction: formData.jurisdiction,
-      dateRange: formData.dateRange,
-      referenceNumber: formData.referenceNumber
+      query: formData
     })
     
     return documents
@@ -48,13 +44,12 @@ const handleFormSubmit = async (formData: LegalDocsFormData) => {
   }
 }
 
-// Event handlers
 const onSuccess = (result: any) => {
-  console.log('Success:', result)
+  console.log('Search successful:', result)
 }
 
 const onError = (error: Error) => {
-  console.error('Error:', error)
+  console.error('Search error:', error)
 }
 </script>
 
@@ -89,12 +84,5 @@ body {
   color: #2c3e50;
   margin-bottom: 8px;
   font-size: 32px;
-}
-
-.subtitle {
-  text-align: center;
-  color: #6b7280;
-  margin-bottom: 32px;
-  font-size: 16px;
 }
 </style>

@@ -17,9 +17,11 @@
     "dist"
   ],
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --host 0.0.0.0",
     "build": "vite build && vue-tsc --declaration --emitDeclarationOnly --outDir dist",
     "preview": "vite preview",
+    "test:setup": "cd test && npm install",
+    "test:dev": "cd test && npm run dev",
     "prepublishOnly": "npm run build"
   },
   "keywords": [
