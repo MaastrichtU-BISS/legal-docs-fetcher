@@ -7,6 +7,7 @@ export class LegalDocsClient {
 
   constructor(config: LegalDocsClientConfig) {
     this.config = {
+      baseURL: "https://api.caselawexplorer.tech/api",
       timeout: 30000,
       ...config,
     };
@@ -20,7 +21,6 @@ export class LegalDocsClient {
       },
     });
 
-    // Add request interceptor
     this.client.interceptors.request.use(
       (config) => {
         // You can add custom logic here (e.g., logging, authentication)
@@ -31,13 +31,11 @@ export class LegalDocsClient {
       },
     );
 
-    // Add response interceptor
     this.client.interceptors.response.use(
       (response) => {
         return response;
       },
       (error) => {
-        // Handle errors globally
         const errorMessage =
           error.response?.data?.message || error.message || "An error occurred";
         return Promise.reject(new Error(errorMessage));

@@ -97,7 +97,7 @@ export interface LegalDocument {
 }
 
 export interface LegalDocsClientConfig {
-  baseURL: string;
+  baseURL?: string;
   apiKey?: string;
   timeout?: number;
   headers?: Record<string, string>;

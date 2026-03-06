@@ -17,22 +17,15 @@ import LegalDocsForm from '../components/LegalDocsForm.vue'
 import { createLegalDocsClient } from '../api/client'
 import type { QueryParameters } from '../types'
 
-// Initialize the API client using the Vite proxy
-// In development, requests go to /api which Vite proxies to the real API
 const client = createLegalDocsClient({
-  baseURL: '/api', // Vite will proxy this to the real API
-  timeout: 30000
+  // You can add custom configuration here if needed (e.g., API key, timeout)
 })
 
 console.log('API Client initialized with proxy')
 
-// Handle form submission
 const handleFormSubmit = async (formData: QueryParameters) => {
   console.log('Form submitted with parameters:', formData)
-  
   try {
-    
-    // Make the actual API call directly to the edge endpoint
     const documents = await client.fetchDocuments({
       query: formData
     })
