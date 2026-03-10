@@ -248,6 +248,12 @@
                         {{ loading ? 'Searching...' : 'Search Documents' }}
                     </button>
                 </div>
+
+                <!-- Loader -->
+                <div v-if="loading" class="loader-container">
+                    <div class="spinner"></div>
+                    <p class="loader-text">Searching documents...</p>
+                </div>
             </form>
 
             <!-- Success Message -->
@@ -995,6 +1001,43 @@ const handleReset = () => {
   color: #6b7280;
   margin-bottom: 32px;
   font-size: 16px;
+}
+
+/* Loader */
+.loader-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 16px;
+  padding: 12px;
+}
+
+.spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid #e5e7eb;
+  border-top: 2px solid #3b82f6;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  flex-shrink: 0;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.loader-text {
+  color: #3b82f6;
+  font-size: 14px;
+  font-weight: 500;
+  margin: 0;
 }
 
 /* Responsive */
