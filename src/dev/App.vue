@@ -14,8 +14,8 @@
 
 <script setup lang="ts">
 import LegalDocsForm from '../components/LegalDocsForm.vue'
-import { createLegalDocsClient } from '../api/client'
-import type { QueryParameters } from '../types'
+import { createLegalDocsClient } from 'legal-docs-client'
+import type { QueryParameters } from 'legal-docs-client'
 
 const client = createLegalDocsClient({
   // You can add custom configuration here if needed (e.g., API key, timeout)
@@ -28,9 +28,7 @@ const handleFormSubmit = async (formData: QueryParameters) => {
   try {
 
     // get documents from API
-    const documents = await client.fetchDocuments({
-      query: formData
-    })
+    const documents = await client.fetchDocuments(formData)
 
     // get full text for each document
     const documentsWithFullText = await client.getFullText(documents.map((doc) => doc.id))
