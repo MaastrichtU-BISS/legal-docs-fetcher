@@ -12,7 +12,7 @@
                             :class="{ 'active': formData.selectedDataset === DataSource.RS }">
                             Rechtspraak
                         </button>
-                        <button type="button" @click="formData.selectedDataset = DataSource.ECHR"
+                        <button type="button" @click="formData.selectedDataset = DataSource.ECHR" disabled
                             :class="{ 'active': formData.selectedDataset === DataSource.ECHR }">
                             ECHR
                         </button>
