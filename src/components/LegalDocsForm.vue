@@ -25,7 +25,7 @@
 
                 <!-- Keywords (chip input) -->
                 <div class="form-group">
-                    <label for="keywords">Keywords</label>
+                    <label for="keywords">Keywords <span class="required-asterisk">*</span></label>
                     <div class="chips-container">
                         <span v-for="(keyword, index) in formData.keywords" :key="index" class="chip">
                             {{ keyword }}
@@ -40,7 +40,7 @@
 
                 <!-- ECLIs -->
                 <div class="form-group">
-                    <label for="eclis">ECLIs (comma-separated)</label>
+                    <label for="eclis">ECLIs <span class="required-asterisk">*</span> (comma-separated)</label>
                     <input id="eclis" v-model="formData.eclis" type="text"
                         placeholder="e.g., ECLI:NL:HR:2020:123, ECLI:NL:HR:2020:456" />
                 </div>
@@ -244,7 +244,7 @@
                     <button type="button" @click="handleReset" :disabled="loading">
                         Reset
                     </button>
-                    <button type="submit" :disabled="loading">
+                    <button type="submit" :disabled="loading || (!formData.keywords.length && !formData.eclis.trim())">
                         {{ loading ? 'Searching...' : 'Search Documents' }}
                     </button>
                 </div>
@@ -258,6 +258,11 @@
             <!-- Error Message -->
             <div v-if="error" class="error-message">
                 {{ error }}
+            </div>
+
+            <!-- Warning Message -->
+            <div v-if="formData.keywords.length === 0 && !formData.eclis.trim()" class="warning-message">
+                <strong>*</strong> Required: Please enter either keywords or ECLIs to search
             </div>
     </div>
 </template>
@@ -570,6 +575,12 @@ function parseParameters(): QueryParameters {
 }
 
 const handleSubmit = async () => {
+    // Validate that either keywords or ECLIs are provided
+    if (formData.keywords.length === 0 && !formData.eclis.trim()) {
+        error.value = 'Please enter either keywords or ECLIs to search'
+        return
+    }
+
     loading.value = true
     error.value = null
     successMessage.value = null
@@ -956,6 +967,23 @@ const handleReset = () => {
     border-radius: 6px;
     color: #dc2626;
     font-size: 14px;
+}
+
+/* Warning Message */
+.warning-message {
+    margin-top: 16px;
+    padding: 12px;
+    background-color: #fffbeb;
+    border: 1px solid #fde68a;
+    border-radius: 6px;
+    color: #92400e;
+    font-size: 14px;
+}
+
+/* Required Asterisk */
+.required-asterisk {
+    color: #dc2626;
+    margin-left: 2px;
 }
 
 .title {
