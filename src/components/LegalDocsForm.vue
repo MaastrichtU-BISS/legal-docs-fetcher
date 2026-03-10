@@ -240,7 +240,9 @@
 
 <script setup lang="ts">
 import { ref, reactive } from 'vue'
-import { DataSource, DocType, type QueryParameters } from '../types'
+import type { QueryParameters } from 'legal-docs-client'
+import { DataSource, DocType } from 'legal-docs-client'
+
 
 export interface LegalDocsFormProps {
     title?: string
