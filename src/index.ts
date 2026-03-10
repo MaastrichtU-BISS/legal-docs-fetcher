@@ -7,9 +7,10 @@ export * from 'legal-docs-client'
 // Export components
 export { LegalDocsForm }
 
+// Export component types
 export type {
   LegalDocsFormProps
-} from './components/LegalDocsForm.vue'
+} from './components/types'
 
 // Vue plugin for registering components globally
 export const VueLegalQueryBuilderPlugin: Plugin = {

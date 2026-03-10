@@ -277,13 +277,7 @@
 import { ref, reactive } from 'vue'
 import type { QueryParameters } from 'legal-docs-client'
 import { DataSource, DocType, INSTANCES_OPTIONS, DOMAINS_OPTIONS } from 'legal-docs-client'
-
-
-export interface LegalDocsFormProps {
-    title?: string
-    subtitle?: string
-    onSubmit?: (data: QueryParameters) => Promise<any>
-}
+import type { LegalDocsFormProps } from './types'
 
 const props = withDefaults(defineProps<LegalDocsFormProps>(), {
     title: 'Legal Documents Search'
