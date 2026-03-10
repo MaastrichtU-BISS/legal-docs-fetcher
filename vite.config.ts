@@ -14,10 +14,11 @@ export default defineConfig({
       fileName: (format: string) => `vue-legal-query-builder.${format}.js`
     },
     rollupOptions: {
-      external: ['vue'],
+      external: ['vue', 'legal-docs-client'],
       output: {
         globals: {
-          vue: 'Vue'
+          vue: 'Vue',
+          'legal-docs-client': 'LegalDocsClient'
         }
       }
     }
