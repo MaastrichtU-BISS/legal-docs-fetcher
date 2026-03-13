@@ -3,7 +3,7 @@ import LegalDocsForm from './components/LegalDocsForm.vue'
 
 // Re-export everything from legal-docs-client dependency
 export * from 'legal-docs-client'
-export { createLegalDocsClient } from 'legal-docs-client'
+export type * from 'legal-docs-client'
 
 // Export components
 export { LegalDocsForm }
