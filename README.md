@@ -1,26 +1,13 @@
 # vue-legal-query-builder
 
-A Vue 3 component for building legal document search queries. Provides an intuitive interface for searching through court instances, legal domains, and other legal document metadata.
+A Vue 3 component for building legal document search queries using the [legal-docs-client](https://www.npmjs.com/package/legal-docs-client) package.
+
 
 ## Installation
 
 ```bash
 npm install vue-legal-query-builder
 ```
-
-## Features
-
-- **Hierarchical Filtering**: Collapsible tree-view for court instances and legal domains with parent-child toggling
-- **Keyword & ECLI Search**: Multiple input methods for searching legal documents (keywords required OR ECLIs)
-- **Dataset Selection**: Support for different legal document sources (Rechtspraak dataset)
-- **Advanced Settings**: Optional advanced filtering options including:
-  - Date range filters
-  - Network degrees
-  - Document types (decisions, opinions)
-  - Importance levels
-- **Responsive Design**: Mobile-friendly form interface with proper spacing
-- **Type-Safe**: Full TypeScript support
-- **Loading States**: Visual feedback with spinning loader during search
 
 ## Usage
 
@@ -30,7 +17,6 @@ npm install vue-legal-query-builder
 <template>
   <LegalDocsForm 
     title="Search Legal Documents"
-    subtitle="Find legal documents with advanced filtering"
     :on-submit="handleSubmit"
     @success="onSuccess"
     @error="onError"
@@ -41,13 +27,11 @@ npm install vue-legal-query-builder
 import { LegalDocsForm, createLegalDocsClient } from 'vue-legal-query-builder'
 import 'vue-legal-query-builder/style.css'
 
-// Create a client using the re-exported dependency
 const client = createLegalDocsClient({
-  baseURL: 'https://api.example.com'
+  // config (Optional)
 })
 
 const handleSubmit = async (queryParams) => {
-  // Use the client to fetch documents
   const results = await client.fetchDocuments(queryParams)
   return results
 }
@@ -100,20 +84,6 @@ console.log(DOMAINS_OPTIONS)
 | `@success` | any | Emitted when search completes successfully |
 | `@error` | Error | Emitted when an error occurs |
 
-## QueryParameters
-
-The form generates search parameters with:
-
-- `dataSources`: Array of selected datasets
-- `keywords`: Array of search keywords
-- `eclis`: Array of ECLI identifiers  
-- `instances`: Array of selected court instances
-- `domains`: Array of selected legal domains
-- `dateStart`, `dateEnd`: Date range filters
-- `degreesSource`, `degreesTarget`: Network degree filters
-- `docTypes`: Document types filter
-- And more...
-
 ## Requirements
 
 - Vue 3.4 or higher
@@ -125,12 +95,6 @@ This package bundles and re-exports the entire [`legal-docs-client`](https://www
 ## License
 
 MIT
-
-const onError = (error) => {
-  console.error('Error:', error)
-}
-</script>
-```
 
 ## Development
 
