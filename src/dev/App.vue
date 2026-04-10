@@ -2,13 +2,14 @@
     <main class="dev-main">
         <LegalDocsForm 
             :onSubmit="handleSubmit"
+            :type="FormType.FREE"
             @success="handleSuccess"
         />
     </main>
 </template>
 
 <script setup lang="ts">
-import { LegalDocsForm, createLegalDocsClient } from '../index'
+import { LegalDocsForm, createLegalDocsClient, FormType } from '../index'
 
 const client = createLegalDocsClient({})
 

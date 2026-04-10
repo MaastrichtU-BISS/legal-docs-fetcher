@@ -4,6 +4,7 @@ import type { App, Plugin } from "vue";
 import LegalDocsForm from "./components/LegalDocsForm.vue";
 export { LegalDocsForm };
 export type { LegalDocsFormProps } from "./components/types";
+export { FormType } from "./components/types";
 
 // Explicitly import and re-export types from legal-docs-client
 import type {

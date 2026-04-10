@@ -1,5 +1,6 @@
 <template>
     <div class="legal-docs-form">
+        <template v-if="props.type === FormType.FREE">
             <h2 class="title">{{ title }}</h2>
             <p class="subtitle"> {{ subtitle }}</p>
 
@@ -270,6 +271,10 @@
             <div v-if="formData.keywords.length === 0 && !formData.eclis.trim()" class="warning-message">
                 <strong>*</strong> Required: Please enter either keywords or ECLIs to search
             </div>
+        </template>
+        <template v-else>
+            <h2 class="title">{{ title }}</h2>
+        </template>
     </div>
 </template>
 
@@ -278,9 +283,11 @@ import { ref, reactive } from 'vue'
 import type { QueryParameters } from 'legal-docs-client'
 import { DataSource, DocType, INSTANCES_OPTIONS, DOMAINS_OPTIONS } from 'legal-docs-client'
 import type { LegalDocsFormProps } from './types'
+import { FormType } from './types'
 
 const props = withDefaults(defineProps<LegalDocsFormProps>(), {
-    title: 'Legal Documents Search'
+    title: 'Legal Documents Search',
+    type: FormType.FREE
 })
 
 const emit = defineEmits<{
