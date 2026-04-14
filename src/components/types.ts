@@ -24,6 +24,7 @@ export interface Step {
   description: string
   required: boolean
   blockType: BlockType
+  placeholder?: string
 }
 
 export interface Goal {
