@@ -23,8 +23,8 @@
         <template v-else>
             <div class="stepper-view">
                 <button @click="goBackToGoals" class="btn-back" :disabled="props.loading">
-                    <ArrowLeft :size="16" />
-                    Back to Goals
+                    <Home :size="16" />
+                    Query Selection
                 </button>
                 
                 <h3 class="view-title">{{ currentGoal.title }}</h3>
@@ -102,7 +102,7 @@
 
 <script setup lang="ts">
 import { ref, computed, defineAsyncComponent } from 'vue'
-import { ArrowLeft, ArrowRight } from 'lucide-vue-next'
+import { ArrowLeft, ArrowRight, Home } from 'lucide-vue-next'
 import type { GuidedStructure, Step, Goal } from '../types'
 import { BlockType } from '../types'
 
@@ -129,6 +129,7 @@ const props = defineProps<Props>()
 
 const emit = defineEmits<{
     'submit': []
+    'handleReset': []
 }>()
 
 const getIconComponent = (iconName: string) => {
@@ -156,13 +157,15 @@ const currentStep = computed((): Step | undefined => {
 })
 
 // Methods
-const selectGoal = (index: number) => {
-    selectedGoalIndex.value = index
-    currentStepIndex.value = 0
-}
 
 const goBackToGoals = () => {
     selectedGoalIndex.value = null
+    currentStepIndex.value = 0
+    emit('handleReset')
+}
+
+const selectGoal = (index: number) => {
+    selectedGoalIndex.value = index
     currentStepIndex.value = 0
 }
 

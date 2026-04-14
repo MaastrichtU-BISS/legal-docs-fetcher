@@ -15,6 +15,7 @@
             :formData="formData"
             :loading="loading"
             @submit="handleSubmit"
+            @handleReset="handleReset"
         />
 
         <!-- Success Message -->
@@ -232,6 +233,10 @@ const handleReset = () => {
     formData.respondentStateInput = ''
     formData.languageInput = ''
     formData.importance = []
+    clearMessages()
+}
+
+const clearMessages = () => {
     error.value = null
     successMessage.value = null
 }
