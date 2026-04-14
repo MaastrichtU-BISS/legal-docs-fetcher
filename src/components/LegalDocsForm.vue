@@ -13,6 +13,7 @@
             v-else-if="props.type === FormType.GUIDED"
             :guidedStructure="props.guidedStructure"
             :formData="formData"
+            :loading="loading"
             @submit="handleSubmit"
         />
 
@@ -24,6 +25,12 @@
         <!-- Error Message -->
         <div v-if="error" class="error-message">
             {{ error }}
+        </div>
+
+        <!-- Loader -->
+        <div v-if="loading" class="loader-container">
+            <div class="spinner"></div>
+            <p class="loader-text">Searching documents...</p>
         </div>
     </div>
 </template>
@@ -520,12 +527,14 @@ const handleReset = () => {
 /* Loader */
 .loader-container {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 12px;
+  padding: 20px;
+  background: #f9fafb;
+  border-radius: 4px;
   margin-top: 16px;
-  padding: 12px;
 }
 
 .spinner {
@@ -535,7 +544,6 @@ const handleReset = () => {
   border-top: 2px solid #3b82f6;
   border-radius: 50%;
   animation: spin 1s linear infinite;
-  flex-shrink: 0;
 }
 
 @keyframes spin {

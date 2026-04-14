@@ -22,7 +22,7 @@
         <!-- Stepper View -->
         <template v-else>
             <div class="stepper-view">
-                <button @click="goBackToGoals" class="btn-back">
+                <button @click="goBackToGoals" class="btn-back" :disabled="props.loading">
                     <ArrowLeft :size="16" />
                     Back to Goals
                 </button>
@@ -69,7 +69,7 @@
                 <div class="button-container">
                     <button 
                         @click="previousStep" 
-                        :disabled="currentStepIndex === 0"
+                        :disabled="currentStepIndex === 0 || props.loading"
                         class="btn btn-secondary"
                     >
                         <ArrowLeft :size="16" />
@@ -78,6 +78,7 @@
                     <button 
                         v-if="currentStepIndex < currentGoal.steps.length - 1"
                         @click="nextStep" 
+                        :disabled="props.loading"
                         class="btn btn-primary"
                     >
                         Next
@@ -86,6 +87,7 @@
                     <button 
                         v-else
                         @click="submitGoal" 
+                        :disabled="props.loading"
                         class="btn btn-primary"
                     >
                         Submit
@@ -118,6 +120,7 @@ import ImportanceLevelSelector from '../blocks/ImportanceLevelSelector.vue'
 interface Props {
     guidedStructure?: GuidedStructure
     formData: any
+    loading: boolean
 }
 
 const props = defineProps<Props>()

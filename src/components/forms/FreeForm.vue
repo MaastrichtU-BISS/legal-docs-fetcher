@@ -134,11 +134,6 @@
             </button>
         </div>
 
-        <!-- Loader -->
-        <div v-if="loading" class="loader-container">
-            <div class="spinner"></div>
-            <p class="loader-text">Searching documents...</p>
-        </div>
         <!-- Warning Message -->
         <div v-if="formData.keywords.length === 0 && !formData.eclis.trim()" class="warning-message">
             <strong>*</strong> Required: Please enter either keywords or ECLIs to search
@@ -313,42 +308,6 @@ const handleSubmit = () => emit('submit')
     border-radius: 4px;
     margin-top: 16px;
     font-size: 14px;
-}
-
-.loader-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 12px;
-    padding: 20px;
-    background: #f9fafb;
-    border-radius: 4px;
-    margin-top: 16px;
-}
-
-.spinner {
-    width: 20px;
-    height: 20px;
-    border: 2px solid #e5e7eb;
-    border-top: 2px solid #3b82f6;
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-    0% {
-        transform: rotate(0deg);
-    }
-    100% {
-        transform: rotate(360deg);
-    }
-}
-
-.loader-text {
-    color: #3b82f6;
-    font-size: 14px;
-    font-weight: 500;
-    margin: 0;
 }
 
 @media (max-width: 640px) {
