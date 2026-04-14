@@ -7,6 +7,13 @@
 </template>
 
 <script setup lang="ts">
+import type { GuidedStructure } from '../types'
+
+interface Props {
+  guidedStructure?: GuidedStructure
+}
+
+defineProps<Props>()
 </script>
 
 <style scoped>
