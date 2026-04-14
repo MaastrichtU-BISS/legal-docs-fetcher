@@ -22,7 +22,10 @@
         <!-- Stepper View -->
         <template v-else>
             <div class="stepper-view">
-                <button @click="goBackToGoals" class="btn-back">← Back to Goals</button>
+                <button @click="goBackToGoals" class="btn-back">
+                    <ArrowLeft :size="16" />
+                    Back to Goals
+                </button>
                 
                 <h3 class="view-title">{{ currentGoal.title }}</h3>
                 <p class="goal-description">{{ currentGoal.description }}</p>
@@ -69,14 +72,16 @@
                         :disabled="currentStepIndex === 0"
                         class="btn btn-secondary"
                     >
-                        ← Previous
+                        <ArrowLeft :size="16" />
+                        Previous
                     </button>
                     <button 
                         v-if="currentStepIndex < currentGoal.steps.length - 1"
                         @click="nextStep" 
                         class="btn btn-primary"
                     >
-                        Next →
+                        Next
+                        <ArrowRight :size="16" />
                     </button>
                     <button 
                         v-else
@@ -94,6 +99,7 @@
 <script setup lang="ts">
 import { ref, computed, reactive, defineAsyncComponent } from 'vue'
 import { DataSource, DocType } from 'legal-docs-client'
+import { ArrowLeft, ArrowRight } from 'lucide-vue-next'
 import type { GuidedStructure, Step, Goal } from '../types'
 import { BlockType } from '../types'
 
@@ -394,11 +400,14 @@ const getBlockProps = (step: Step): any => {
 .stepper-view {
     display: flex;
     flex-direction: column;
-    gap: 24px;
+    gap: 10px;
 }
 
 .btn-back {
     align-self: flex-start;
+    display: flex;
+    align-items: center;
+    gap: 6px;
     padding: 8px 12px;
     border: 1px solid #ddd;
     background: white;
@@ -419,7 +428,7 @@ const getBlockProps = (step: Step): any => {
     gap: 12px;
     overflow-x: auto;
     padding: 8px 0;
-    margin-bottom: 24px;
+    margin: auto;
 }
 
 .step-indicator {
@@ -526,6 +535,9 @@ const getBlockProps = (step: Step): any => {
 }
 
 .btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
     padding: 10px 20px;
     border-radius: 4px;
     font-size: 14px;
