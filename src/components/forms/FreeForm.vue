@@ -300,16 +300,6 @@ const handleSubmit = () => emit('submit')
     font-style: italic;
 }
 
-.warning-message {
-    padding: 12px 16px;
-    background: #fef3c7;
-    border-left: 4px solid #eab308;
-    color: #854d0e;
-    border-radius: 4px;
-    margin-top: 16px;
-    font-size: 14px;
-}
-
 @media (max-width: 640px) {
     .form-group-row {
         grid-template-columns: 1fr;
