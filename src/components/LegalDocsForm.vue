@@ -165,6 +165,10 @@ function parseParameters(): QueryParameters {
 }
 
 const handleSubmit = async () => {
+    // Clear previous messages
+    error.value = null
+    successMessage.value = null
+
     // Validate that either keywords or ECLIs are provided
     if (formData.keywords.length === 0 && !formData.eclis.trim()) {
         error.value = 'Please enter either keywords or ECLIs to search'
@@ -172,8 +176,6 @@ const handleSubmit = async () => {
     }
 
     loading.value = true
-    error.value = null
-    successMessage.value = null
 
     try {
         const params = parseParameters()
