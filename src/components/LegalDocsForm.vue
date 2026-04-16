@@ -480,9 +480,7 @@ const clearMessages = () => {
     cursor: not-allowed;
 }
 
-/* Success Message */
 .success-message {
-    margin-top: 16px;
     padding: 12px;
     background-color: #f0fdf4;
     border: 1px solid #bbf7d0;
@@ -491,9 +489,7 @@ const clearMessages = () => {
     font-size: 14px;
 }
 
-/* Error Message */
 .error-message {
-    margin-top: 16px;
     padding: 12px;
     background-color: #fef2f2;
     border: 1px solid #fecaca;
