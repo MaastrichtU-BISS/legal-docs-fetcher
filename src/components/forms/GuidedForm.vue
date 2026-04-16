@@ -52,18 +52,20 @@
 
                 <!-- Current Step Content -->
                 <div class="step-content">
-                    <div class="step-header">
-                        <h4>{{ currentStep.title }}</h4>
-                        <span v-if="currentStep.required" class="required-badge">Required</span>
-                    </div>
-                    <p class="step-description">{{ currentStep.description }}</p>
+                    <div v-for="(block, index) in currentStep.blocks" :key="index">
+                        <div class="step-header">
+                            <h4>{{ block.title }}</h4>
+                            <span v-if="block.required" class="required-badge">Required</span>
+                        </div>
+                        <p class="step-description">{{ block.description }}</p>
 
-                    <!-- Dynamic Block Component -->
-                    <div class="block-wrapper">
-                        <component 
-                            :is="getBlockComponent(currentStep.blockType)"
-                            v-bind="getBlockProps(currentStep)"
-                        />
+                        <!-- Dynamic Block Component -->
+                        <div class="block-wrapper">
+                            <component 
+                                :is="getBlockComponent(block.type)"
+                                v-bind="getBlockProps(block)"
+                            />
+                        </div>
                     </div>
                 </div>
 
@@ -103,7 +105,7 @@
 <script setup lang="ts">
 import { ref, computed, defineAsyncComponent } from 'vue'
 import { ArrowLeft, ArrowRight, Home } from 'lucide-vue-next'
-import type { GuidedStructure, Step, Goal } from '../types'
+import type { GuidedStructure, Step, Goal, Block } from '../types'
 import { BlockType } from '../types'
 
 // Block components
@@ -210,18 +212,18 @@ const getBlockComponent = (blockType: BlockType) => {
     return componentMap[blockType]
 }
 
-const getBlockProps = (step: Step): any => {
+const getBlockProps = (block: Block): any => {
     const baseProps: any = {}
 
-    switch (step.blockType) {
+    switch (block.type) {
         case BlockType.ARTICLE_FIELD:
             return {
                 ...baseProps,
-                label: step.title,
+                label: block.type,
                 fieldName: 'articleField',
                 modelValue: props.formData.articleViolatedInput,
                 'onUpdate:modelValue': (val: string) => { props.formData.articleViolatedInput = val },
-                placeholder: step.placeholder
+                placeholder: block.placeholder
             }
 
         case BlockType.DATASET_SELECTOR:
@@ -298,11 +300,11 @@ const getBlockProps = (step: Step): any => {
         case BlockType.TEXT_INPUT:
             return {
                 ...baseProps,
-                label: step.title,
-                fieldId: step.title.toLowerCase().replace(/\s+/g, '-'),
+                label: block.type,
+                fieldId: block.type.toLowerCase().replace(/\s+/g, '-'),
                 value: props.formData.articleViolatedInput,
                 'onUpdate:value': (val: string) => { props.formData.articleViolatedInput = val },
-                placeholder: step.placeholder
+                placeholder: block.placeholder
             }
 
         default:
@@ -516,8 +518,14 @@ const getBlockProps = (step: Step): any => {
     line-height: 1.6;
 }
 
+.blocks-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
 .block-wrapper {
-    margin-bottom: 16px;
+    margin-bottom: 0;
 }
 
 .button-container {

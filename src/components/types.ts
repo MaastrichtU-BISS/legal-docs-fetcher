@@ -19,12 +19,16 @@ export enum BlockType {
   TEXT_INPUT = 'TextInput',
 }
 
-export interface Step {
+export interface Block {
+  type: BlockType
   title: string
   description: string
-  required: boolean
-  blockType: BlockType
   placeholder?: string
+  required?: boolean
+}
+
+export interface Step {
+  blocks: Block[]
 }
 
 export interface Goal {
