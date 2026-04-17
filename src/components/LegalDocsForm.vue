@@ -42,11 +42,11 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, computed } from 'vue'
+import { ref, reactive } from 'vue'
 import type { QueryParameters } from 'legal-docs-client'
 import { DataSource, DocType } from 'legal-docs-client'
 import type { LegalDocsFormProps } from './types'
-import { FormType, type BlockType } from './types'
+import { FormType } from './types'
 import FreeForm from './forms/FreeForm.vue'
 import GuidedForm from './forms/GuidedForm.vue'
 
@@ -486,6 +486,7 @@ const clearMessages = () => {
 }
 
 .success-message {
+    margin-top: 16px;
     padding: 12px;
     background-color: #f0fdf4;
     border: 1px solid #bbf7d0;
@@ -495,6 +496,7 @@ const clearMessages = () => {
 }
 
 .error-message {
+    margin-top: 16px;
     padding: 12px;
     background-color: #fef2f2;
     border: 1px solid #fecaca;

@@ -74,6 +74,7 @@ const searchQuery = ref('')
 const loading = ref(false)
 const results = ref<BWBItem[]>([])
 const showResults = ref(false)
+const selectedLawsData = ref<BWBItem[]>([])
 
 // Debounce timer
 let debounceTimer: ReturnType<typeof setTimeout> | null = null
@@ -84,14 +85,7 @@ onMounted(() => {
 })
 
 const selectedLawsDisplay = computed(() => {
-    return selectedLaws.value.map(item => {
-        const parts = item.split('|')
-        return {
-            bwb_id: parts[0],
-            bwb_label_id: parts[1],
-            title: parts[2] || ''
-        }
-    })
+    return selectedLawsData.value
 })
 
 const handleSearch = async () => {
@@ -118,7 +112,6 @@ const handleSearch = async () => {
         if (!client.value) return
         try {
             const data = await client.value.fetchLaws(query)
-            console.log(results.value)
             results.value = data || []
         } catch (error) {
             // Silently ignore errors as per requirement
@@ -130,23 +123,26 @@ const handleSearch = async () => {
 }
 
 const isSelected = (item: BWBItem): boolean => {
-    const key = `${item.bwb_id}|${item.bwb_label_id}|${item.title || ''}`
+    const key = `${item.bwb_id}|${item.bwb_label_id}`
     return selectedLaws.value.includes(key)
 }
 
 const toggleSelection = (item: BWBItem) => {
-    const key = `${item.bwb_id}|${item.bwb_label_id}|${item.title || ''}`
+    const key = `${item.bwb_id}|${item.bwb_label_id}`
     const index = selectedLaws.value.indexOf(key)
 
     if (index > -1) {
         selectedLaws.value.splice(index, 1)
+        selectedLawsData.value.splice(index, 1)
     } else {
         selectedLaws.value.push(key)
+        selectedLawsData.value.push(item)
     }
 }
 
 const removeLaw = (index: number) => {
     selectedLaws.value.splice(index, 1)
+    selectedLawsData.value.splice(index, 1)
 }
 </script>
 

@@ -190,27 +190,25 @@ function isBlockFilled(blockType: BlockType, data: any): boolean {
     }
 }
 
-// Validation logic for GuidedForm: for each step, at least one required block must be filled
+// Validation logic for GuidedForm: for the current goal, each step must have at least one required block filled
 const isValid = computed(() => {
-    if (!props.guidedStructure?.goals) return true
+    if (!currentGoal.value) return true
     
-    for (const goal of props.guidedStructure.goals) {
-        for (const step of goal.steps) {
-            // Check if this step has any required blocks
-            const requiredBlocks = step.blocks.filter(block => block.required)
-            if (requiredBlocks.length === 0) continue // Skip steps with no required blocks
-            
-            // Check if at least one required block is filled
-            const hasFilledRequiredBlock = requiredBlocks.some(block => 
-                isBlockFilled(block.type as BlockType, props.formData)
-            )
-            
-            if (!hasFilledRequiredBlock) {
-                return false // Invalid: This step has unfilled required blocks
-            }
+    for (const step of currentGoal.value.steps) {
+        // Check if this step has any required blocks
+        const requiredBlocks = step.blocks.filter(block => block.required)
+        if (requiredBlocks.length === 0) continue // Skip steps with no required blocks
+        
+        // Check if at least one required block is filled
+        const hasFilledRequiredBlock = requiredBlocks.some(block => 
+            isBlockFilled(block.type as BlockType, props.formData)
+        )
+        
+        if (!hasFilledRequiredBlock) {
+            return false // Invalid: This step has unfilled required blocks
         }
     }
-    return true // All steps have at least one required block filled
+    return true // Current goal has all required blocks filled in each step
 })
 
 // Methods
