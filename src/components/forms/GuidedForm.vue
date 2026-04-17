@@ -57,12 +57,15 @@
                         </div>
                         <p class="step-description">{{ block.description }}</p>
 
-                        <!-- Dynamic Block Component -->
+                        <!-- Dynamic Block Component (cached to preserve state across steps) -->
                         <div class="block-wrapper">
-                            <component 
-                                :is="getBlockComponent(block.type)"
-                                v-bind="getBlockProps(block)"
-                            />
+                            <KeepAlive>
+                                <component 
+                                    :is="getBlockComponent(block.type)"
+                                    v-bind="getBlockProps(block)"
+                                    :key="`${selectedGoalIndex}-${currentStepIndex}-${index}`"
+                                />
+                            </KeepAlive>
                         </div>
                     </div>
                 </div>
@@ -102,7 +105,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, defineAsyncComponent } from 'vue'
+import { ref, computed, defineAsyncComponent, KeepAlive } from 'vue'
 import { ArrowLeft, ArrowRight, Home, Search } from 'lucide-vue-next'
 import type { GuidedStructure, Step, Goal, Block } from '../types'
 import { BlockType } from '../types'

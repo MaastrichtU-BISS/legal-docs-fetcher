@@ -57,7 +57,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, watch } from 'vue'
 import { createLegalDocsClient } from 'legal-docs-client'
 import type { LegalDocsClient, BWBItem } from 'legal-docs-client'
 
@@ -84,7 +84,26 @@ onMounted(() => {
     client.value = createLegalDocsClient({})
 })
 
+// Sync selectedLawsData when selectedLaws changes externally (e.g., external updates)
+watch(() => selectedLaws.value, (newVal) => {
+    // Keep selectedLawsData in sync by preserving existing items and removing deleted ones
+    const newKeys = new Set(newVal)
+    
+    // Remove items that are no longer in selectedLaws
+    selectedLawsData.value = selectedLawsData.value.filter(item => 
+        newKeys.has(`${item.bwb_id}|${item.bwb_label_id}`)
+    )
+    
+    // Reorder to match selectedLaws order
+    selectedLawsData.value.sort((a, b) => {
+        const aKey = `${a.bwb_id}|${a.bwb_label_id}`
+        const bKey = `${b.bwb_id}|${b.bwb_label_id}`
+        return newVal.indexOf(aKey) - newVal.indexOf(bKey)
+    })
+}, { deep: true })
+
 const selectedLawsDisplay = computed(() => {
+    // Return cached data which is now reliably persisted across component remounts
     return selectedLawsData.value
 })
 
