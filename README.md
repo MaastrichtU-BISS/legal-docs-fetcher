@@ -25,7 +25,9 @@ npm install vue-legal-query-builder
 import { LegalDocsForm, createLegalDocsClient } from 'vue-legal-query-builder'
 import 'vue-legal-query-builder/style.css'
 
-const client = createLegalDocsClient({})
+const client = createLegalDocsClient({
+  apiKey: import.meta.env.VITE_CITATIONS_API_KEY,
+})
 
 const handleSubmit = async (queryParams) => {
   const results = await client.fetchDocuments(queryParams)
@@ -41,6 +43,28 @@ const handleError = (error) => {
 }
 </script>
 ```
+
+## Required API Token
+
+This package requires an API token for document requests.
+
+1. Create a `.env` (or `.env.local`) file in your project root.
+2. Add your token with a Vite-compatible variable name:
+
+```env
+VITE_CITATIONS_API_KEY=your_token_here
+```
+
+3. Use it when creating the client:
+
+```ts
+const client = createLegalDocsClient({
+  apiKey: import.meta.env.VITE_CITATIONS_API_KEY,
+})
+```
+
+New API keys can be generated here:
+https://api.caselawexplorer.tech/login.html?next=/account.html
 
 ## Form Types
 
