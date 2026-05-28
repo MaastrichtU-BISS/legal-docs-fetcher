@@ -226,6 +226,42 @@ const guidedStructure = {
 
 ## GuidedForm Structure
 
+### Goal Object Properties
+| Property | Type | Required | Description |
+|----------|------|----------|-------------|
+| `title` | string | Yes | Goal title shown in the goal card |
+| `description` | string | Yes | Goal description shown in the goal card |
+| `icon` | string | No | Optional Lucide icon name (for example `scale`, `layers`) |
+| `fixedParameters` | Partial<QueryParameters> | No | Hidden query parameters automatically merged into the submitted query when this goal is selected |
+| `steps` | Step[] | Yes | Steps shown after selecting the goal |
+
+### fixedParameters
+Use `fixedParameters` when you want to enforce specific query values for a goal without exposing extra controls in the UI.
+
+- Applied only for the currently selected goal
+- Merged into the final `QueryParameters` right before submit
+- If a fixed key overlaps with user-entered data, the fixed value takes precedence
+
+**Example:** force `degreesTarget: 1` for an authority-search goal.
+
+```ts
+const guidedStructure = {
+  goals: [
+    {
+      title: "Authority Search",
+      description: "Find highly cited cases",
+      icon: "scale",
+      fixedParameters: {
+        degreesTarget: 1,
+      },
+      steps: [
+        // ...
+      ],
+    },
+  ],
+}
+```
+
 ### Step Object Properties
 | Property | Type | Required | Description |
 |----------|------|----------|-------------|
