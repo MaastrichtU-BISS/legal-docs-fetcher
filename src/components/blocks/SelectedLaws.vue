@@ -57,9 +57,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, watch } from 'vue'
+import { ref, computed, watch } from 'vue'
 import { createLegalDocsClient } from 'legal-docs-client'
-import type { LegalDocsClient, BWBItem } from 'legal-docs-client'
+import type { BWBItem } from 'legal-docs-client'
 
 
 const props = defineProps<{
@@ -69,7 +69,9 @@ const props = defineProps<{
 
 const selectedLaws = defineModel<string[]>('selectedLaws', { default: () => [] })
 
-const client = ref<LegalDocsClient | null>(null)
+const client = createLegalDocsClient({
+    apiKey: import.meta.env.VITE_CITATIONS_API_KEY
+})
 const searchQuery = ref('')
 const loading = ref(false)
 const results = ref<BWBItem[]>([])
@@ -78,11 +80,6 @@ const selectedLawsData = ref<BWBItem[]>([])
 
 // Debounce timer
 let debounceTimer: ReturnType<typeof setTimeout> | null = null
-
-// Initialize the client on mount
-onMounted(() => {
-    client.value = createLegalDocsClient({})
-})
 
 // Sync selectedLawsData when selectedLaws changes externally (e.g., external updates)
 watch(() => selectedLaws.value, (newVal) => {
@@ -128,9 +125,9 @@ const handleSearch = async () => {
 
     // Debounce the fetch call
     debounceTimer = setTimeout(async () => {
-        if (!client.value) return
+        if (!client) return
         try {
-            const data = await client.value.fetchLaws(query)
+            const data = await client.fetchLaws(query)
             results.value = data || []
         } catch (error) {
             // Silently ignore errors as per requirement
