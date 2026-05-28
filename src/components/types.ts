@@ -19,6 +19,8 @@ export enum BlockType {
   NETWORK_DEGREES = 'NetworkDegrees',
   REASONING_INPUT = 'ReasoningInput',
   SELECTED_LAWS = 'SelectedLaws',
+  TEXT_INPUT = 'TextInput',
+  TEXTAREA_INPUT = 'TextAreaInput',
 }
 
 export interface Block {
