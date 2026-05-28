@@ -81,6 +81,7 @@ const formData = reactive({
     // Similarity Search fields
     facts: '',
     reasoning: '',
+    guidedFixedParameters: {} as Partial<QueryParameters>,
     // ECHR-specific
     articleViolatedInput: '',
     articleAppliedInput: '',
@@ -171,7 +172,10 @@ function parseParameters(): QueryParameters {
         }
     }
 
-    return params
+    return {
+        ...params,
+        ...formData.guidedFixedParameters
+    }
 }
 
 const handleSubmit = async (isValid: boolean) => {
@@ -232,6 +236,7 @@ const handleReset = () => {
     formData.opinions = false
     formData.engine = 'ES'
     formData.attributesToFetch = 'ALL'
+    formData.guidedFixedParameters = {}
     formData.articleViolatedInput = ''
     formData.articleAppliedInput = ''
     formData.articleNonViolatedInput = ''

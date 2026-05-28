@@ -258,6 +258,9 @@ const goBackToGoals = () => {
 const selectGoal = (index: number) => {
     selectedGoalIndex.value = index
     currentStepIndex.value = 0
+
+    // Persist hidden fixed parameters for the selected goal so parent parsing can merge them.
+    props.formData.guidedFixedParameters = props.guidedStructure?.goals[index]?.fixedParameters || {}
 }
 
 const previousStep = () => {

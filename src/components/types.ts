@@ -40,6 +40,7 @@ export interface Goal {
   title: string
   description: string
   icon?: string
+  fixedParameters?: Partial<QueryParameters>
   steps: Step[]
 }
 
